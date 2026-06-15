@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 CareerVerse
 
-## Getting Started
+### *Level Up Your Career Journey*
 
-First, run the development server:
+CareerVerse is a gamified AI-powered career development platform that transforms career exploration into an engaging adventure.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Instead of static career guidance, CareerVerse creates a personalized **AI Career Twin** that understands your skills, interests, goals, and progress. It helps users discover career paths, identify skill gaps, practice interviews, build stronger resumes, and follow personalized learning roadmaps—all through an immersive RPG-inspired experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🤖 AI Career Twin
 
-## Learn More
+A digital representation of your professional self that evolves with your skills, achievements, and career goals.
 
-To learn more about Next.js, take a look at the following resources:
+### 🌳 Skill Trees
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Visualize your growth through interactive skill trees inspired by role-playing games.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🗺️ Learning Roadmaps
 
-## Deploy on Vercel
+Receive personalized learning paths tailored to your target career and current skill level.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🎤 AI Interview Simulator
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Practice real-world interviews with AI-generated questions and feedback.
+
+### 📄 Resume Analyzer
+
+Analyze resumes, identify weaknesses, and receive actionable improvement suggestions.
+
+### 📈 Career Insights
+
+Explore potential career paths, opportunities, and growth trajectories.
+
+### 🏆 Progress Tracking
+
+Earn achievements, unlock milestones, and monitor your professional development.
+
+---
+
+## 🎯 Who Is It For?
+
+* Students exploring career options
+* University graduates entering the workforce
+* Self-taught learners
+* Internship seekers
+* Job applicants preparing for interviews
+* Professionals looking to upskill
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+### Backend
+
+* Supabase
+* PostgreSQL
+
+### AI & Intelligence
+
+* OpenAI APIs
+* Retrieval-Augmented Generation (RAG)
+* Vector Embeddings
+* Recommendation Systems
+* Semantic Search
+
+---
+
+## 🌟 Vision
+
+Career growth shouldn't feel confusing, overwhelming, or boring.
+
+CareerVerse aims to make professional development interactive, personalized, and rewarding by combining Artificial Intelligence, gamification, and modern learning experiences.
+
+---
+
+## 🔥 Why CareerVerse?
+
+Most career platforms tell you what jobs exist.
+
+CareerVerse helps you become the person capable of getting them.
+
+Think:
+
+**LinkedIn × RPG × AI**
+
+---
+
+## 🚧 Project Status
+
+Currently under active development.
+
+New features, improvements, and AI capabilities are being added continuously.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+# CareerVerse
+
+### *Where Ambition Becomes an Adventure.*
