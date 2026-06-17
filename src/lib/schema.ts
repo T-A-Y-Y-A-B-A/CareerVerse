@@ -50,3 +50,37 @@ export const userSkills = pgTable(
     uniq: uniqueIndex('user_skills_user_skill_idx').on(t.userId, t.skillId),
   })
 );
+
+export type RoadmapMonth = {
+  month:       number
+  title:       string
+  topics:      string[]
+  project:     string
+  milestone:   string
+}
+
+export const roadmaps = pgTable('roadmaps', {
+  id:          serial('id').primaryKey(),
+  userId:      integer('user_id')
+                 .notNull()
+                 .references(() => users.id, { onDelete: 'cascade' }),
+  goal:        text('goal').notNull(),
+  targetRole:  text('target_role'),
+  duration:    integer('duration_months').notNull(),
+  months:      json('months').$type<RoadmapMonth[]>().default([]),
+  createdAt:   timestamp('created_at').defaultNow(),
+})
+
+export const roadmapProgress = pgTable('roadmap_progress', {
+  id:         serial('id').primaryKey(),
+  roadmapId:  integer('roadmap_id')
+                .notNull()
+                .references(() => roadmaps.id, { onDelete: 'cascade' }),
+  userId:     integer('user_id')
+                .notNull()
+                .references(() => users.id, { onDelete: 'cascade' }),
+  monthIndex: integer('month_index').notNull(),
+  completedAt: timestamp('completed_at').defaultNow(),
+}, (t) => ({
+  uniq: uniqueIndex('roadmap_progress_uniq').on(t.roadmapId, t.monthIndex),
+}))

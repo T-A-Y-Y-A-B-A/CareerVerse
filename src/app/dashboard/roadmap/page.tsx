@@ -1,51 +1,63 @@
-import { auth } from '@clerk/nextjs/server'
-import { db } from '@/lib/db'
-import { users, careerProfiles } from '@/lib/schema'
-import { eq } from 'drizzle-orm'
-import { CareerLadder } from '@/components/roadmap/career-ladder'
-import { getLevelInfo } from '@/lib/skills-data'
+'use client'
 
-export default async function RoadmapPage() {
-  const { userId } = await auth()
+import { useState, useEffect } from 'react'
+import { GoalInput }        from '@/components/roadmap/goal-input'
+import { RoadmapTimeline }  from '@/components/roadmap/roadmap-timeline'
 
-  let userLevel = 1
-  let totalXP = 0
+export default function RoadmapPage() {
+  const [roadmap,  setRoadmap]  = useState<any>(null)
+  const [loading,  setLoading]  = useState(true)
+  const [error,    setError]    = useState('')
 
-  if (userId) {
-    const [user] = await db
-      .select({ xp: users.xp })
-      .from(users)
-      .where(eq(users.clerkId, userId))
+  useEffect(() => {
+    fetch('/api/roadmap')
+      .then((r) => r.json())
+      .then((d) => { setRoadmap(d.roadmap); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
 
-    if (user) {
-      totalXP = user.xp ?? 0
-      userLevel = getLevelInfo(totalXP).level
-    }
+  const handleGenerate = async (goal: string, duration: number) => {
+    setError('')
+    setLoading(true)
+    const res  = await fetch('/api/roadmap', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ goal, duration }),
+    })
+    const data = await res.json()
+    if (!res.ok) { setError(data.error || 'Generation failed'); setLoading(false); return }
+    setRoadmap(data.roadmap)
+    setLoading(false)
+  }
+
+  if (loading && !error && !roadmap) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
   }
 
   return (
-    <div className="relative w-full h-[calc(100vh-120px)] min-h-[600px] rounded-2xl overflow-hidden border border-purple-500/20 shadow-[0_0_40px_rgba(168,85,247,0.1)] bg-[#030308]/90 backdrop-blur-xl">
-      {/* Floating header */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-6 md:p-8 pointer-events-none">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-br from-white via-purple-100 to-purple-400 bg-clip-text text-transparent drop-shadow-sm">
-              Career Roadmap
-            </h1>
-            <p className="text-purple-200/60 text-sm md:text-base mt-2 max-w-md font-medium">
-              Your path to the top. Level up your skills and experience to unlock the next stage.
-            </p>
-          </div>
+    <div className="max-w-2xl mx-auto px-6 py-8 space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold">Learning Roadmap</h1>
+        <p className="text-muted-foreground mt-1">
+          Set a goal. Get a personalized month-by-month plan built around what you already know.
+        </p>
+      </div>
+
+      {error && (
+        <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
+          <p className="text-sm text-destructive">{error}</p>
         </div>
-      </div>
+      )}
 
-      {/* Roadmap takes up the full area, padded by the header */}
-      <div className="w-full h-full pt-24 md:pt-28">
-        <CareerLadder userLevel={userLevel} totalXP={totalXP} />
-      </div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#030308] to-transparent pointer-events-none z-10" />
+      {roadmap ? (
+        <RoadmapTimeline roadmap={roadmap} onNewRoadmap={() => setRoadmap(null)} />
+      ) : (
+        <GoalInput onSubmit={handleGenerate} isLoading={loading} />
+      )}
     </div>
   )
 }
