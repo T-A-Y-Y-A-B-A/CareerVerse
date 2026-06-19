@@ -42,6 +42,8 @@ const items = [
   { title: "Career Simulator", url: "/dashboard/simulator", icon: TrendingUp },
 ];
 
+import logoImg from '../../public/abc.png';
+
 export function AppSidebar() {
   const pathname = usePathname();
   const { play } = useSounds();
@@ -51,7 +53,7 @@ export function AppSidebar() {
       <SidebarHeader className="flex h-16 items-center justify-center border-b px-4">
         <div className="flex w-full items-center gap-4">
           <Image
-            src="/abc.png"
+            src={logoImg}
             alt="CareerVerse Logo"
             width={52}
             height={52}

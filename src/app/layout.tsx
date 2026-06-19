@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "CareerVerse",
   description: "Level Up Your Career Like a Video Game",
+  icons: "/abc.png",
 };
 
 export default function RootLayout({

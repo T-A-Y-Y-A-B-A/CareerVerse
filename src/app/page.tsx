@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSounds } from "@/hooks/useSounds";
 import Image from "next/image";
+import logoImg from "../../public/abc.png";
 import { Button } from "@/components/ui/button";
 import {
   Target,
@@ -45,7 +46,7 @@ export default function Home() {
       {/* Header */}
       <header className="flex h-20 items-center justify-between px-6 lg:px-12 z-20 border-b border-white/5 bg-black/40 backdrop-blur-md">
         <div className="flex items-center gap-2 font-bold text-xl tracking-tight text-white">
-          <Image src="/abc.png" alt="CareerVerse Logo" width={40} height={40} className="rounded-md object-contain w-10 h-auto" />
+          <Image src={logoImg} alt="CareerVerse Logo" width={40} height={40} className="rounded-md object-contain w-10 h-auto" />
           CareerVerse
         </div>
         <nav className="flex items-center gap-4">
@@ -468,10 +469,8 @@ export default function Home() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-[150px] rounded-full pointer-events-none"></div>
 
           <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 p-1 mb-8 shadow-[0_0_50px_rgba(147,51,234,0.4)]">
-              <div className="w-full h-full bg-black rounded-full flex items-center justify-center">
-                <Sword className="w-10 h-10 text-white" />
-              </div>
+            <div className="w-48 h-48 mb-8 flex-shrink-0 relative">
+              <Image src={logoImg} alt="CareerVerse" fill className="object-contain" />
             </div>
 
             <h2 className="text-5xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight">
