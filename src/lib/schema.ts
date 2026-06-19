@@ -84,3 +84,24 @@ export const roadmapProgress = pgTable('roadmap_progress', {
 }, (t) => ({
   uniq: uniqueIndex('roadmap_progress_uniq').on(t.roadmapId, t.monthIndex),
 }))
+
+export type CompanyPrediction = {
+  company:     string
+  match:       number        // 0–100
+  verdict:     string        // 'Strong Match' | 'Possible' | 'Reach'
+  reasons:     string[]      // why you match
+  gaps:        string[]      // what's holding you back
+  tip:         string        // one specific action to improve this match
+}
+
+export const internshipPredictions = pgTable('internship_predictions', {
+  id:           serial('id').primaryKey(),
+  userId:       integer('user_id')
+                  .notNull()
+                  .references(() => users.id, { onDelete: 'cascade' }),
+  gpa:          text('gpa'),
+  targetRole:   text('target_role').notNull(),
+  extraSkills:  json('extra_skills').$type<string[]>().default([]),
+  companies:    json('companies').$type<CompanyPrediction[]>().default([]),
+  createdAt:    timestamp('created_at').defaultNow(),
+})

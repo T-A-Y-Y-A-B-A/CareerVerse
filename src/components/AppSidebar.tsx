@@ -38,7 +38,7 @@ const items = [
   { title: "Resume Analyzer", url: "/dashboard/resume", icon: FileText },
   { title: "Learning Roadmap", url: "/dashboard/roadmap", icon: Map },
   { title: "Interview Simulator", url: "/dashboard/interview", icon: MessageSquare },
-  { title: "Internship Predictor", url: "/dashboard/internships", icon: Building2 },
+  { title: "Internship Predictor", url: "/dashboard/internship-predictor", icon: Building2 },
   { title: "Career Simulator", url: "/dashboard/simulator", icon: TrendingUp },
 ];
 
