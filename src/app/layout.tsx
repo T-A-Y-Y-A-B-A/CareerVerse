@@ -41,8 +41,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
-            <div className="fixed bottom-6 right-6 z-50">
-              <ThemeToggle />
+            <div className="fixed bottom-6 right-6 z-50 animate-bounce-small">
+              <div className="bg-background/80 backdrop-blur-sm rounded-full p-1 shadow-lg border border-border hover:shadow-purple-500/20 hover:border-purple-500/50 transition-all duration-300">
+                <ThemeToggle />
+              </div>
             </div>
           </ThemeProvider>
         </body>
