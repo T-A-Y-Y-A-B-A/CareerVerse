@@ -1,3 +1,4 @@
+import { GraduationCap, Lightbulb, Plus, Minus } from 'lucide-react';
 import { useState, useEffect } from 'react'
 import { useSounds } from "@/hooks/useSounds"
 
@@ -209,7 +210,7 @@ export function CareerProfile({ profile, onReUpload }: Props) {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <h3 className="font-semibold text-sm text-green-600 dark:text-green-400">
-            ✦ Strengths
+            <Plus className="w-4 h-4 mr-1 inline" /> Strengths
           </h3>
           <div className="flex flex-wrap gap-2">
             {profile.strengths.map((s) => (
@@ -224,7 +225,7 @@ export function CareerProfile({ profile, onReUpload }: Props) {
         </div>
         <div className="space-y-2">
           <h3 className="font-semibold text-sm text-red-500 dark:text-red-400">
-            ✗ Weaknesses
+            <Minus className="w-4 h-4 mr-1 inline" /> Weaknesses
           </h3>
           <div className="flex flex-wrap gap-2">
             {profile.weaknesses.map((w) => (
@@ -275,7 +276,7 @@ export function CareerProfile({ profile, onReUpload }: Props) {
       {courses.length > 0 && (
         <div className="space-y-3 pt-4 border-t">
           <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
-            Recommended Courses & Certificates 👨‍🎓
+            Recommended Courses & Certificates <GraduationCap className="w-5 h-5 ml-2 inline text-muted-foreground" />
           </h3>
           <div className="grid grid-cols-1 gap-2.5">
             {courses.map(([cName, cLink], i) => (
@@ -303,7 +304,7 @@ export function CareerProfile({ profile, onReUpload }: Props) {
       {bonusVideos && (
         <div className="space-y-4 pt-6 border-t">
           <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
-            Bonus Video Guides 💡
+            Bonus Video Guides <Lightbulb className="w-5 h-5 ml-2 inline text-muted-foreground" />
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">

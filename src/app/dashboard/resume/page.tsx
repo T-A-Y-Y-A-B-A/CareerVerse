@@ -1,4 +1,5 @@
 'use client'
+import { Target, Zap, TriangleAlert, X, Clipboard, BarChart, CheckCircle, XCircle, Dumbbell, TrendingDown, PenTool, Rocket } from 'lucide-react';
 
 import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
@@ -122,34 +123,34 @@ function ScoreBar({ label, value, delay = 0 }: { label: string; value: number; d
 
 // ── Verdict Badge ────────────────────────────────────────────────────────────
 function VerdictBadge({ verdict }: { verdict: string }) {
-  const config: Record<string, { bg: string; text: string; border: string; glow: string; icon: string }> = {
+  const config: Record<string, { bg: string; text: string; border: string; glow: string; icon: React.ReactNode }> = {
     'Strong Fit': {
       bg: 'bg-emerald-500/15',
       text: 'text-emerald-400',
       border: 'border-emerald-500/30',
       glow: 'shadow-[0_0_20px_rgba(34,197,94,0.2)]',
-      icon: '🎯',
+      icon: <Target className="w-4 h-4" />,
     },
     'Moderate Fit': {
       bg: 'bg-yellow-500/15',
       text: 'text-yellow-400',
       border: 'border-yellow-500/30',
       glow: 'shadow-[0_0_20px_rgba(234,179,8,0.2)]',
-      icon: '⚡',
+      icon: <Zap className="w-4 h-4" />,
     },
     'Weak Fit': {
       bg: 'bg-orange-500/15',
       text: 'text-orange-400',
       border: 'border-orange-500/30',
       glow: 'shadow-[0_0_20px_rgba(249,115,22,0.2)]',
-      icon: '⚠️',
+      icon: <TriangleAlert className="w-4 h-4" />,
     },
     'Poor Fit': {
       bg: 'bg-red-500/15',
       text: 'text-red-400',
       border: 'border-red-500/30',
       glow: 'shadow-[0_0_20px_rgba(239,68,68,0.2)]',
-      icon: '❌',
+      icon: <X className="w-4 h-4" />,
     },
   }
 
@@ -173,10 +174,10 @@ function GlassCard({ children, className = '' }: { children: React.ReactNode; cl
 }
 
 // ── Section Title ────────────────────────────────────────────────────────────
-function SectionTitle({ icon, children }: { icon: string; children: React.ReactNode }) {
+function SectionTitle({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
     <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
-      <span className="text-base">{icon}</span>
+      <span className="text-base flex items-center">{icon}</span>
       {children}
     </h3>
   )
@@ -273,7 +274,7 @@ export default function ResumeAnalyzerPage() {
             <GlassCard className="border-amber-500/20 bg-amber-500/[0.05]">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xl">⚠️</span>
+                  <TriangleAlert className="w-5 h-5 text-amber-500" />
                 </div>
                 <div>
                   <h3 className="text-amber-400 font-bold text-sm">Resume Required</h3>
@@ -294,7 +295,7 @@ export default function ResumeAnalyzerPage() {
         {hasProfile && !analysis && (
           <div className="animate-in fade-in slide-in-from-bottom-6 duration-700" style={{ animationDelay: '100ms' }}>
             <GlassCard className="space-y-5">
-              <SectionTitle icon="📋">Paste the Job Description</SectionTitle>
+              <SectionTitle icon={<Clipboard className="w-5 h-5" />}>Paste the Job Description</SectionTitle>
               <div className="relative group">
                 <textarea
                   id="resume-jd-input"
@@ -311,7 +312,7 @@ export default function ResumeAnalyzerPage() {
 
               {error && (
                 <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium">
-                  <span>⚠️</span> {error}
+                  <span><TriangleAlert className="w-4 h-4 inline mr-1 text-amber-500" /></span> {error}
                 </div>
               )}
 
@@ -356,7 +357,7 @@ export default function ResumeAnalyzerPage() {
 
             {/* Detailed Score Breakdown */}
             <GlassCard>
-              <SectionTitle icon="📊">Score Breakdown</SectionTitle>
+              <SectionTitle icon={<BarChart className="w-5 h-5" />}>Score Breakdown</SectionTitle>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                 <ScoreRing value={analysis.atsScore} label="ATS Score" />
                 <ScoreRing value={analysis.keywordMatch} label="Keywords" />
@@ -374,7 +375,7 @@ export default function ResumeAnalyzerPage() {
             {/* Keywords Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <GlassCard>
-                <SectionTitle icon="✅">Matched Keywords</SectionTitle>
+                <SectionTitle icon={<CheckCircle className="w-5 h-5" />}>Matched Keywords</SectionTitle>
                 <div className="flex flex-wrap gap-2">
                   {analysis.matchedKeywords.map((kw) => (
                     <span
@@ -387,7 +388,7 @@ export default function ResumeAnalyzerPage() {
                 </div>
               </GlassCard>
               <GlassCard>
-                <SectionTitle icon="❌">Missing Keywords</SectionTitle>
+                <SectionTitle icon={<XCircle className="w-5 h-5" />}>Missing Keywords</SectionTitle>
                 <div className="flex flex-wrap gap-2">
                   {analysis.missingKeywords.map((kw) => (
                     <span
@@ -404,7 +405,7 @@ export default function ResumeAnalyzerPage() {
             {/* Strengths + Weaknesses */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <GlassCard>
-                <SectionTitle icon="💪">Strengths for This Role</SectionTitle>
+                <SectionTitle icon={<Dumbbell className="w-5 h-5" />}>Strengths for This Role</SectionTitle>
                 <div className="space-y-2.5">
                   {analysis.strongPoints.map((point, i) => (
                     <div key={i} className="flex gap-3 items-start">
@@ -417,7 +418,7 @@ export default function ResumeAnalyzerPage() {
                 </div>
               </GlassCard>
               <GlassCard>
-                <SectionTitle icon="🔻">Areas to Improve</SectionTitle>
+                <SectionTitle icon={<TrendingDown className="w-5 h-5" />}>Areas to Improve</SectionTitle>
                 <div className="space-y-2.5">
                   {analysis.weakPoints.map((point, i) => (
                     <div key={i} className="flex gap-3 items-start">
@@ -434,7 +435,7 @@ export default function ResumeAnalyzerPage() {
             {/* Rewritten Summary */}
             {analysis.rewrittenSummary && (
               <GlassCard>
-                <SectionTitle icon="✍️">Optimized Professional Summary</SectionTitle>
+                <SectionTitle icon={<PenTool className="w-5 h-5" />}>Optimized Professional Summary</SectionTitle>
                 <div className="relative">
                   <div className="bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/20 rounded-xl p-5">
                     <p className="text-sm text-gray-200 leading-relaxed italic">
@@ -456,7 +457,7 @@ export default function ResumeAnalyzerPage() {
 
             {/* Action Suggestions */}
             <GlassCard>
-              <SectionTitle icon="🚀">Action Plan</SectionTitle>
+              <SectionTitle icon={<Rocket className="w-5 h-5" />}>Action Plan</SectionTitle>
               <div className="space-y-3">
                 {analysis.suggestions.map((suggestion, i) => (
                   <div

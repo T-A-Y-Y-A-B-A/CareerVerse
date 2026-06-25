@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, integer, json, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, integer, json, uniqueIndex, boolean } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -105,3 +105,53 @@ export const internshipPredictions = pgTable('internship_predictions', {
   companies:    json('companies').$type<CompanyPrediction[]>().default([]),
   createdAt:    timestamp('created_at').defaultNow(),
 })
+
+// ── Resume Analyses ─────────────────────────────────────────────────────────
+export const resumeAnalyses = pgTable('resume_analyses', {
+  id:         serial('id').primaryKey(),
+  userId:     integer('user_id')
+                .notNull()
+                .references(() => users.id, { onDelete: 'cascade' }),
+  targetRole: text('target_role'),
+  atsScore:   integer('ats_score').notNull(),
+  createdAt:  timestamp('created_at').defaultNow(),
+})
+
+// ── Interview Sessions ──────────────────────────────────────────────────────
+export const interviewSessions = pgTable('interview_sessions', {
+  id:         serial('id').primaryKey(),
+  userId:     integer('user_id')
+                .notNull()
+                .references(() => users.id, { onDelete: 'cascade' }),
+  targetRole: text('target_role').notNull(),
+  mode:       text('mode').notNull(),
+  answers:    json('answers').default([]),
+  avgScore:   integer('avg_score').default(0),
+  completed:  boolean('completed').default(false),
+  createdAt:  timestamp('created_at').defaultNow(),
+})
+
+// ── Career Simulations ──────────────────────────────────────────────────────
+export const careerSimulations = pgTable('career_simulations', {
+  id:        serial('id').primaryKey(),
+  userId:    integer('user_id')
+               .notNull()
+               .references(() => users.id, { onDelete: 'cascade' }),
+  pathA:     json('path_a').notNull(),
+  pathB:     json('path_b').notNull(),
+  verdict:   text('verdict'),
+  createdAt: timestamp('created_at').defaultNow(),
+})
+
+// ── Quest Completions (XP payout ledger — prevents double-awarding) ─────────
+export const questCompletions = pgTable('quest_completions', {
+  id:          serial('id').primaryKey(),
+  userId:      integer('user_id')
+                 .notNull()
+                 .references(() => users.id, { onDelete: 'cascade' }),
+  questId:     text('quest_id').notNull(),
+  xpAwarded:   integer('xp_awarded').notNull(),
+  completedAt: timestamp('completed_at').defaultNow(),
+}, (t) => ({
+  uniq: uniqueIndex('quest_completions_uniq').on(t.userId, t.questId),
+}))

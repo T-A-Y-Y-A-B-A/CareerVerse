@@ -1,4 +1,5 @@
 'use client'
+import { Plus, Minus, Lightbulb } from 'lucide-react';
 
 import type { CompanyPrediction } from '@/lib/schema'
 
@@ -108,7 +109,7 @@ export function CompanyCards({ prediction, onRepredict }: Props) {
                 {c.reasons.length > 0 && (
                   <div className="pt-3 space-y-1.5">
                     <p className="text-xs font-semibold text-green-600 dark:text-green-400">
-                      ✦ Why you match
+                      <Plus className="w-4 h-4 inline mr-1" /> Why you match
                     </p>
                     {c.reasons.map((r, i) => (
                       <p key={i} className="text-xs text-muted-foreground flex gap-2">
@@ -122,7 +123,7 @@ export function CompanyCards({ prediction, onRepredict }: Props) {
                 {c.gaps.length > 0 && (
                   <div className="space-y-1.5">
                     <p className="text-xs font-semibold text-red-500 dark:text-red-400">
-                      ✗ What's holding you back
+                      <Minus className="w-4 h-4 inline mr-1" /> What's holding you back
                     </p>
                     {c.gaps.map((g, i) => (
                       <p key={i} className="text-xs text-muted-foreground flex gap-2">
@@ -134,7 +135,7 @@ export function CompanyCards({ prediction, onRepredict }: Props) {
 
                 {/* Tip */}
                 <div className="rounded-lg bg-background border p-3">
-                  <p className="text-xs font-semibold text-primary mb-1">💡 Tip</p>
+                  <p className="text-xs font-semibold text-primary mb-1"><Lightbulb className="w-4 h-4 inline mr-1" /> Tip</p>
                   <p className="text-xs">{c.tip}</p>
                 </div>
               </div>

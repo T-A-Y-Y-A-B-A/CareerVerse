@@ -1,201 +1,244 @@
-import { syncUser } from "@/lib/user-sync";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import {
-  UserRound, Network, FileText, Map, MessageSquare, Building2, TrendingUp,
-  CheckCircle, BellRing, Sparkles, Target, Zap, Shield, Play
-} from "lucide-react";
-import { getLevelInfo } from "@/lib/skills-data";
+'use client'
 
-export default async function DashboardPage() {
-  const user = await syncUser();
-  if (!user) {
-    redirect('/sign-in');
+import { useState, useEffect } from 'react'
+import { StatCard }  from '@/components/dashboard/stat-card'
+import { QuestList } from '@/components/dashboard/quest-list'
+import Link from 'next/link'
+import { Target, UserRound, Network, FileText, Map, MessageSquare, Building2, TrendingUp, Search, Compass } from 'lucide-react'
+
+interface DashboardData {
+  user: {
+    firstName: string | null
+    level: number
+    xp: number
+    xpForNext: number
+    totalXp: number
+    rolePath: string | null
+    xpJustGained: number
+  }
+  stats: {
+    hasProfile: boolean
+    skillsUnlocked: number
+    totalSkillsAvailable: number
+    resumeAnalysesCount: number
+    bestAtsScore: number | null
+    roadmapsCount: number
+    interviewsCompleted: number
+    bestInterviewScore: number | null
+    internshipChecks: number
+    simulationsCount: number
+  }
+  quickGlance: {
+    latestRoadmapGoal: string | null
+    latestRoadmapDuration: number | null
+    latestInterviewRole: string | null
+    latestInterviewScore: number | null
+    latestSimulation: { pathA: string; pathB: string } | null
+  }
+  quests: any[]
+}
+
+export default function DashboardPage() {
+  const [data,    setData]    = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [xpToast, setXpToast] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('/api/dashboard')
+      .then((r) => r.json())
+      .then((d: DashboardData) => {
+        setData(d)
+        if (d.user.xpJustGained > 0) setXpToast(d.user.xpJustGained)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
   }
 
-  const xp = user.xp ?? 0;
-  const { level: careerLevel, currentXP: currentXpProgress, xpForNext: targetXp } = getLevelInfo(xp);
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <p className="text-destructive">Failed to load dashboard.</p>
+      </div>
+    )
+  }
 
-  // Level info
-  let levelDesc = 'Junior Engineer';
-  if (careerLevel >= 28) levelDesc = 'CTO';
-  else if (careerLevel >= 21) levelDesc = 'Staff Engineer';
-  else if (careerLevel >= 14) levelDesc = 'Senior Engineer';
-  else if (careerLevel >= 7) levelDesc = 'Engineer';
-
-  const progressPercent = Math.min(100, Math.max(0, (currentXpProgress / targetXp) * 100));
-  const xpToNextLevel = targetXp - currentXpProgress;
-
+  const { user, stats, quickGlance, quests } = data
+  const xpPct = user.xpForNext > 0 ? Math.round((user.xp / user.xpForNext) * 100) : 100
+  
   const features = [
     { title: "Career Twin", desc: "AI-powered career profile & skills assessment.", url: "/dashboard/career-twin", icon: UserRound, color: "text-purple-400" },
     { title: "Skill Tree", desc: "Unlock and track your technical competencies.", url: "/dashboard/skill-tree", icon: Network, color: "text-blue-400" },
     { title: "Resume Analyzer", desc: "Get an ATS score and actionable feedback.", url: "/dashboard/resume", icon: FileText, color: "text-emerald-400" },
     { title: "Learning Roadmap", desc: "Step-by-step guides tailored for you.", url: "/dashboard/roadmap", icon: Map, color: "text-orange-400" },
     { title: "Interview Simulator", desc: "Practice mock interviews with AI.", url: "/dashboard/interview", icon: MessageSquare, color: "text-pink-400" },
-    { title: "Internship Predictor", desc: "Estimate your chances for top roles.", url: "/dashboard/internships", icon: Building2, color: "text-indigo-400" },
+    { title: "Internship Predictor", desc: "Estimate your chances for top roles.", url: "/dashboard/internship-predictor", icon: Building2, color: "text-indigo-400" },
     { title: "Career Simulator", desc: "Simulate different career outcomes.", url: "/dashboard/simulator", icon: TrendingUp, color: "text-rose-400" },
   ];
 
   return (
-    <div className="flex flex-col gap-8 pb-12 animate-in fade-in duration-700">
-      
-      {/* Top Header & XP Widget */}
-      <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground tracking-tight flex items-center gap-2">
-            Welcome back, {user.firstName || 'Adventurer'} <Sparkles className="w-6 h-6 text-purple-400" />
-          </h1>
-          <p className="text-muted-foreground mt-1 font-medium">Your career dashboard and progression hub.</p>
-        </div>
+    <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-700">
 
-        {/* Animated XP Progress Widget */}
-        <div className="w-full lg:w-96 bg-background border border-border rounded-2xl p-5 backdrop-blur-md shadow-xl flex flex-col gap-3 group hover:border-purple-500/50 transition-all duration-300">
-          <div className="flex justify-between items-end">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-purple-400 mb-1">Current Level</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-black text-foreground">Lvl {careerLevel}</span>
-                <span className="text-sm text-muted-foreground font-medium">{levelDesc}</span>
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="text-xl font-bold text-foreground">{currentXpProgress}</span>
-              <span className="text-sm text-muted-foreground font-medium"> / {targetXp} XP</span>
-            </div>
-          </div>
-          {/* Progress Bar */}
-          <div className="h-3 w-full bg-card rounded-full overflow-hidden border border-border shadow-inner relative">
-            <div 
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-purple-600 to-pink-500 animate-progress"
-              style={{ width: `${progressPercent}%` }}
-            >
-              <div className="absolute inset-0 bg-foreground/20 w-full animate-pulse"></div>
-            </div>
-          </div>
-          <p className="text-xs text-center text-muted-foreground font-medium">
-            <span className="text-pink-400 font-bold">{xpToNextLevel} XP</span> until Level {careerLevel + 1}
-          </p>
-        </div>
+      {/* Header section */}
+      <div>
+        <h1 className="text-3xl font-bold text-foreground tracking-tight flex items-center gap-2">
+          Welcome back, {user.firstName || 'Adventurer'}
+        </h1>
+        <p className="text-muted-foreground mt-1 font-medium">Your career progression dashboard.</p>
       </div>
 
-      {/* Continue Your Journey */}
-      <section>
-        <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Play className="w-5 h-5 text-emerald-400" /> Continue Your Journey
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-background border border-border rounded-xl p-4 flex flex-col justify-between hover:bg-background transition-colors">
-            <p className="text-sm text-muted-foreground font-medium">Resume Analysis</p>
-            <p className="text-xl font-bold text-foreground mt-1">80% Complete</p>
-          </div>
-          <div className="bg-background border border-border rounded-xl p-4 flex flex-col justify-between hover:bg-background transition-colors">
-            <p className="text-sm text-muted-foreground font-medium">Skill Tree</p>
-            <p className="text-xl font-bold text-foreground mt-1">3 Nodes Unlocked</p>
-          </div>
-          <div className="bg-background border border-border rounded-xl p-4 flex flex-col justify-between hover:bg-background transition-colors">
-            <p className="text-sm text-muted-foreground font-medium">Interview Simulator</p>
-            <p className="text-xl font-bold text-foreground mt-1">Last Score 82%</p>
-          </div>
-          <div className="bg-background border border-border rounded-xl p-4 flex flex-col justify-between hover:bg-background transition-colors">
-            <p className="text-sm text-muted-foreground font-medium">Learning Roadmap</p>
-            <p className="text-xl font-bold text-emerald-400 mt-1">Next Topic Available</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Feature Grid */}
-      <section>
-        <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Target className="w-5 h-5 text-blue-400" /> Core Modules
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {features.map((f, i) => (
-            <Link href={f.url} key={i}>
-              <div className="group relative bg-background border border-border rounded-2xl p-5 hover:bg-background transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(168,85,247,0.15)] overflow-hidden h-full flex flex-col">
-                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <f.icon className="w-20 h-20" />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column: Progress & Stats */}
+        <div className="lg:col-span-8 space-y-6">
+          
+          {/* Level header */}
+          <div className="flex items-center gap-4 bg-background border border-border p-5 rounded-2xl shadow-sm">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+              <span className="text-2xl font-bold text-white">{user.level}</span>
+            </div>
+            <div className="flex-1">
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+                Career Level
+              </p>
+              <h1 className="text-xl font-bold text-foreground">
+                {user.rolePath ?? 'Set your path in Career Twin'}
+              </h1>
+              <div className="flex items-center gap-3 mt-2">
+                <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-purple-600 to-pink-500 transition-all duration-700"
+                    style={{ width: `${xpPct}%` }}
+                  />
                 </div>
-                <div className={`w-10 h-10 rounded-lg bg-foreground/5 flex items-center justify-center mb-4 ${f.color}`}>
-                  <f.icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-foreground mb-1">{f.title}</h3>
-                <p className="text-sm text-muted-foreground font-medium leading-relaxed">{f.desc}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* RPG Elements: Daily Quests & Reminders */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        {/* Daily Quests */}
-        <div className="bg-background border border-border rounded-2xl p-6 relative overflow-hidden shadow-lg">
-          <div className="absolute top-0 left-0 w-1 bg-gradient-to-b from-orange-400 to-pink-500 h-full"></div>
-          <h2 className="text-lg font-semibold text-foreground mb-5 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-orange-400" /> Daily Quests
-          </h2>
-          <div className="space-y-3">
-            {[
-              { text: "Upload your latest CV", xp: "+50 XP", done: false },
-              { text: "Complete one interview simulation", xp: "+40 XP", done: false },
-              { text: "Analyze your resume", xp: "+30 XP", done: true },
-              { text: "Learn one roadmap topic", xp: "+20 XP", done: false },
-            ].map((q, i) => (
-              <div key={i} className={`flex items-center justify-between p-3 rounded-xl border ${q.done ? 'bg-emerald-950/20 border-emerald-500/20' : 'bg-foreground/5 border-border'} transition-colors`}>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className={`w-5 h-5 ${q.done ? 'text-emerald-500' : 'text-gray-600'}`} />
-                  <span className={`text-sm font-medium ${q.done ? 'text-muted-foreground line-through' : 'text-muted-foreground'}`}>{q.text}</span>
-                </div>
-                <span className={`text-xs font-bold ${q.done ? 'text-emerald-400 bg-emerald-500/10' : 'text-orange-400 bg-orange-500/10'} px-2.5 py-1 rounded-md`}>
-                  {q.xp}
+                <span className="text-xs text-muted-foreground tabular-nums whitespace-nowrap font-medium">
+                  {user.xp} / {user.xpForNext} XP
                 </span>
               </div>
-            ))}
+            </div>
           </div>
-          <div className="mt-5 pt-4 border-t border-border flex justify-between items-center">
-            <span className="text-sm text-muted-foreground font-medium">Daily Reward Pool:</span>
-            <span className="text-sm font-bold text-foreground">140 XP</span>
+
+          {/* Stat grid — every value is real */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <StatCard
+              label="Skills Unlocked"
+              icon={<Network className="w-4 h-4" />}
+              value={`${stats.skillsUnlocked} / ${stats.totalSkillsAvailable}`}
+              isEmpty={stats.skillsUnlocked === 0}
+              emptyHint="Visit the Skill Tree"
+              href="/dashboard/skill-tree"
+            />
+            <StatCard
+              label="Best ATS Score"
+              icon={<FileText className="w-4 h-4" />}
+              value={stats.bestAtsScore ?? 0}
+              sublabel="out of 100"
+              isEmpty={stats.bestAtsScore === null}
+              emptyHint="Analyze your resume"
+              href="/dashboard/resume"
+            />
+            <StatCard
+              label="Interviews"
+              icon={<MessageSquare className="w-4 h-4" />}
+              value={stats.interviewsCompleted}
+              sublabel={stats.bestInterviewScore ? `Best: ${stats.bestInterviewScore}/100` : undefined}
+              isEmpty={stats.interviewsCompleted === 0}
+              emptyHint="Try a mock interview"
+              href="/dashboard/interview"
+            />
+            <StatCard
+              label="Active Roadmaps"
+              icon={<Map className="w-4 h-4" />}
+              value={stats.roadmapsCount}
+              sublabel={quickGlance.latestRoadmapGoal ?? undefined}
+              isEmpty={stats.roadmapsCount === 0}
+              emptyHint="Set a career goal"
+              href="/dashboard/roadmap"
+            />
+            <StatCard
+              label="Simulations"
+              icon={<Compass className="w-4 h-4" />}
+              value={stats.simulationsCount}
+              sublabel={
+                quickGlance.latestSimulation
+                  ? `${quickGlance.latestSimulation.pathA} vs ${quickGlance.latestSimulation.pathB}`
+                  : undefined
+              }
+              isEmpty={stats.simulationsCount === 0}
+              emptyHint="Compare two paths"
+              href="/dashboard/simulator"
+            />
+            <StatCard
+              label="Internship Checks"
+              icon={<Building2 className="w-4 h-4" />}
+              value={stats.internshipChecks}
+              isEmpty={stats.internshipChecks === 0}
+              emptyHint="Check your odds"
+              href="/dashboard/internship-predictor"
+            />
+            <StatCard
+              label="Resume Analyses"
+              icon={<Search className="w-4 h-4" />}
+              value={stats.resumeAnalysesCount}
+              isEmpty={stats.resumeAnalysesCount === 0}
+              emptyHint="Run your first analysis"
+              href="/dashboard/resume"
+            />
+            <StatCard
+              label="Career Twin"
+              icon={<UserRound className="w-4 h-4" />}
+              value={stats.hasProfile ? 'Built' : 'Not Built'}
+              isEmpty={!stats.hasProfile}
+              emptyHint="Upload your CV"
+              href="/dashboard/career-twin"
+            />
           </div>
+          
+          {/* Interactive Feature Grid */}
+          <section className="pt-4">
+            <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+              <Target className="w-5 h-5 text-blue-400" /> Core Modules
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {features.map((f, i) => (
+                <Link href={f.url} key={i}>
+                  <div className="group relative bg-background border border-border rounded-xl p-4 hover:border-purple-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.1)] overflow-hidden h-full flex flex-col">
+                    <div className={`w-10 h-10 rounded-lg bg-foreground/5 flex items-center justify-center mb-3 ${f.color}`}>
+                      <f.icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-sm font-bold text-foreground mb-1">{f.title}</h3>
+                    <p className="text-xs text-muted-foreground font-medium leading-relaxed">{f.desc}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
         </div>
 
-        {/* Reminders to Gain XP */}
-        <div className="bg-gradient-to-br from-card/80 to-background/60 border border-purple-500/30 rounded-2xl p-6 relative animate-pulse-glow shadow-xl shadow-purple-900/20">
-          <h2 className="text-lg font-semibold text-foreground mb-5 flex items-center gap-2">
-            <BellRing className="w-5 h-5 text-purple-400" /> Reminders to Gain XP
-          </h2>
-          <div className="space-y-3">
-            <div className="flex gap-3 items-start bg-background p-4 rounded-xl border border-purple-500/10 hover:bg-background transition-colors">
-              <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-foreground">Level Up Imminent</p>
-                <p className="text-xs text-muted-foreground mt-1.5 font-medium leading-relaxed">
-                  You are <span className="text-pink-400 font-bold">{xpToNextLevel} XP</span> away from Level {careerLevel + 1}. Complete 2 more quests today to rank up!
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3 items-start bg-background p-4 rounded-xl border border-purple-500/10 hover:bg-background transition-colors">
-              <FileText className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-foreground">Resume Check</p>
-                <p className="text-xs text-muted-foreground mt-1.5 font-medium leading-relaxed">
-                  Your resume hasn't been analyzed this week. Upload a new version for +50 XP.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3 items-start bg-background p-4 rounded-xl border border-purple-500/10 hover:bg-background transition-colors">
-              <Network className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-foreground">Skill Tree Bonus</p>
-                <p className="text-xs text-muted-foreground mt-1.5 font-medium leading-relaxed">
-                  Unlock your next skill node to gain a temporary 20% XP boost!
-                </p>
-              </div>
-            </div>
-          </div>
+        {/* Right Column: Quests */}
+        <div className="lg:col-span-4 bg-background border border-border rounded-2xl p-6 shadow-sm">
+          {/* Real quest list */}
+          <QuestList quests={quests} />
         </div>
-
       </div>
+
+      {/* XP gained toast */}
+      {xpToast !== null && (
+        <div
+          className="fixed bottom-8 right-8 z-50 text-base font-bold text-white bg-gradient-to-r from-emerald-500 to-emerald-400 border border-emerald-300 rounded-xl px-5 py-3 shadow-2xl animate-in slide-in-from-bottom-5 fade-in duration-300"
+          onAnimationEnd={() => setTimeout(() => setXpToast(null), 4000)}
+          style={{ animationFillMode: 'forwards' }}
+        >
+          +{xpToast} XP from completed quests!
+        </div>
+      )}
     </div>
-  );
+  )
 }

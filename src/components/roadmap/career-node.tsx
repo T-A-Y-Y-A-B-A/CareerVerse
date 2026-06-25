@@ -1,4 +1,5 @@
 'use client'
+import { Coins, Wrench } from 'lucide-react';
 
 import { useState } from 'react'
 import type { CareerStage, StageStatus } from '@/lib/career-ladder-data'
@@ -139,7 +140,7 @@ export function CareerNode({ stage, status, index }: CareerNodeProps) {
 
               {/* Salary */}
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-1">💰 Salary Range</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-1"><Coins className="w-3 h-3 inline mr-1" /> Salary Range</p>
                 <p className="text-sm font-semibold text-gray-300">{stage.salaryRange}</p>
               </div>
 
@@ -151,7 +152,7 @@ export function CareerNode({ stage, status, index }: CareerNodeProps) {
 
               {/* Skills */}
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-2">🛠️ Required Skills</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-2"><Wrench className="w-3 h-3 inline mr-1" /> Required Skills</p>
                 <div className="flex flex-wrap gap-1.5">
                   {stage.requiredSkills.map((skill) => (
                     <span

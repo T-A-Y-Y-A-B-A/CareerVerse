@@ -15,7 +15,7 @@ export interface Skill {
 
 export const SKILLS: Skill[] = [
 
-  // ─── AI ENGINEER PATH (x: 50–450) ────────────────────────────────────────
+  //  AI ENGINEER PATH (x: 50450) 
   {
     id: 'python',
     label: 'Python',
@@ -23,7 +23,7 @@ export const SKILLS: Skill[] = [
     xpReward: 100,
     category: 'ai',
     requires: [],
-    icon: '🐍',
+    icon: 'Terminal',
     position: { x: 200, y: 40 },
   },
   {
@@ -33,7 +33,7 @@ export const SKILLS: Skill[] = [
     xpReward: 120,
     category: 'ai',
     requires: ['python'],
-    icon: '📊',
+    icon: 'Database',
     position: { x: 200, y: 220 },
   },
   {
@@ -43,7 +43,7 @@ export const SKILLS: Skill[] = [
     xpReward: 150,
     category: 'ai',
     requires: ['numpy-pandas'],
-    icon: '🧠',
+    icon: 'Cpu',
     position: { x: 200, y: 400 },
   },
   {
@@ -53,7 +53,7 @@ export const SKILLS: Skill[] = [
     xpReward: 200,
     category: 'ai',
     requires: ['ml-fundamentals'],
-    icon: '⚡',
+    icon: 'BrainCircuit',
     position: { x: 80, y: 580 },
   },
   {
@@ -63,7 +63,7 @@ export const SKILLS: Skill[] = [
     xpReward: 175,
     category: 'ai',
     requires: ['ml-fundamentals'],
-    icon: '🔧',
+    icon: 'Cloud',
     position: { x: 320, y: 580 },
   },
   {
@@ -73,7 +73,7 @@ export const SKILLS: Skill[] = [
     xpReward: 250,
     category: 'ai',
     requires: ['deep-learning'],
-    icon: '🤖',
+    icon: 'Code',
     position: { x: 80, y: 760 },
   },
   {
@@ -83,11 +83,11 @@ export const SKILLS: Skill[] = [
     xpReward: 225,
     category: 'ai',
     requires: ['deep-learning'],
-    icon: '👁️',
+    icon: 'Server',
     position: { x: 300, y: 760 },
   },
 
-  // ─── FULL STACK PATH (x: 580–980) ────────────────────────────────────────
+  //  FULL STACK PATH (x: 580980) 
   {
     id: 'javascript',
     label: 'JavaScript',
@@ -95,7 +95,7 @@ export const SKILLS: Skill[] = [
     xpReward: 100,
     category: 'fullstack',
     requires: [],
-    icon: '⚡',
+    icon: 'Zap',
     position: { x: 730, y: 40 },
   },
   {
@@ -105,7 +105,7 @@ export const SKILLS: Skill[] = [
     xpReward: 130,
     category: 'fullstack',
     requires: ['javascript'],
-    icon: '⚛️',
+    icon: 'Layers',
     position: { x: 610, y: 220 },
   },
   {
@@ -115,7 +115,7 @@ export const SKILLS: Skill[] = [
     xpReward: 130,
     category: 'fullstack',
     requires: ['javascript'],
-    icon: '🟢',
+    icon: 'Box',
     position: { x: 850, y: 220 },
   },
   {
@@ -125,7 +125,7 @@ export const SKILLS: Skill[] = [
     xpReward: 160,
     category: 'fullstack',
     requires: ['react'],
-    icon: '▲',
+    icon: 'GitBranch',
     position: { x: 610, y: 400 },
   },
   {
@@ -135,7 +135,7 @@ export const SKILLS: Skill[] = [
     xpReward: 140,
     category: 'fullstack',
     requires: ['nodejs'],
-    icon: '🗄️',
+    icon: 'Monitor',
     position: { x: 850, y: 400 },
   },
   {
@@ -145,7 +145,7 @@ export const SKILLS: Skill[] = [
     xpReward: 150,
     category: 'fullstack',
     requires: ['nextjs'],
-    icon: '🔷',
+    icon: 'Terminal',
     position: { x: 610, y: 580 },
   },
   {
@@ -155,11 +155,11 @@ export const SKILLS: Skill[] = [
     xpReward: 250,
     category: 'fullstack',
     requires: ['databases', 'typescript'],
-    icon: '🏗️',
+    icon: 'Database',
     position: { x: 730, y: 760 },
   },
 
-  // ─── DEVOPS PATH (x: 1060–1380) ──────────────────────────────────────────
+  //  DEVOPS PATH (x: 10601380) 
   {
     id: 'linux',
     label: 'Linux',
@@ -167,7 +167,7 @@ export const SKILLS: Skill[] = [
     xpReward: 100,
     category: 'devops',
     requires: [],
-    icon: '🐧',
+    icon: 'Cpu',
     position: { x: 1180, y: 40 },
   },
   {
@@ -177,7 +177,7 @@ export const SKILLS: Skill[] = [
     xpReward: 100,
     category: 'devops',
     requires: ['linux'],
-    icon: '🌿',
+    icon: 'BrainCircuit',
     position: { x: 1180, y: 220 },
   },
   {
@@ -187,7 +187,7 @@ export const SKILLS: Skill[] = [
     xpReward: 150,
     category: 'devops',
     requires: ['git'],
-    icon: '🐳',
+    icon: 'Cloud',
     position: { x: 1180, y: 400 },
   },
   {
@@ -197,7 +197,7 @@ export const SKILLS: Skill[] = [
     xpReward: 175,
     category: 'devops',
     requires: ['docker'],
-    icon: '⚙️',
+    icon: 'Code',
     position: { x: 1060, y: 580 },
   },
   {
@@ -207,7 +207,7 @@ export const SKILLS: Skill[] = [
     xpReward: 225,
     category: 'devops',
     requires: ['docker'],
-    icon: '☁️',
+    icon: 'Server',
     position: { x: 1300, y: 580 },
   },
   {
@@ -217,11 +217,11 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'devops',
     requires: ['cicd', 'cloud'],
-    icon: '⎈',
+    icon: 'Zap',
     position: { x: 1180, y: 760 },
   },
 
-  // ─── AI ENGINEER PATH TIER 2 ──────────────────────────────────────────────
+  //  AI ENGINEER PATH TIER 2 
   {
     id: 'rlhf-alignment',
     label: 'RLHF & Alignment',
@@ -229,7 +229,7 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'ai',
     requires: ['llm-engineering'],
-    icon: '⚖️',
+    icon: 'Layers',
     position: { x: 80, y: 940 },
     tier: 2,
   },
@@ -240,7 +240,7 @@ export const SKILLS: Skill[] = [
     xpReward: 350,
     category: 'ai',
     requires: ['llm-engineering'],
-    icon: '🤖',
+    icon: 'Box',
     position: { x: 200, y: 1120 },
     tier: 2,
   },
@@ -251,7 +251,7 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'ai',
     requires: ['computer-vision'],
-    icon: '🎨',
+    icon: 'GitBranch',
     position: { x: 320, y: 940 },
     tier: 2,
   },
@@ -262,12 +262,12 @@ export const SKILLS: Skill[] = [
     xpReward: 320,
     category: 'ai',
     requires: ['mlops'],
-    icon: '⚡',
+    icon: 'Monitor',
     position: { x: 440, y: 1120 },
     tier: 2,
   },
 
-  // ─── FULL STACK PATH TIER 2 ──────────────────────────────────────────────
+  //  FULL STACK PATH TIER 2 
   {
     id: 'websockets-realtime',
     label: 'Real-time & WebRTC',
@@ -275,7 +275,7 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'fullstack',
     requires: ['system-design'],
-    icon: '⚡',
+    icon: 'Terminal',
     position: { x: 610, y: 940 },
     tier: 2,
   },
@@ -286,7 +286,7 @@ export const SKILLS: Skill[] = [
     xpReward: 320,
     category: 'fullstack',
     requires: ['nextjs'],
-    icon: '🧩',
+    icon: 'Database',
     position: { x: 850, y: 940 },
     tier: 2,
   },
@@ -297,7 +297,7 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'fullstack',
     requires: ['typescript'],
-    icon: '📱',
+    icon: 'Cpu',
     position: { x: 610, y: 1120 },
     tier: 2,
   },
@@ -308,12 +308,12 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'fullstack',
     requires: ['system-design'],
-    icon: '🕸️',
+    icon: 'BrainCircuit',
     position: { x: 850, y: 1120 },
     tier: 2,
   },
 
-  // ─── DEVOPS PATH TIER 2 ──────────────────────────────────────────────────
+  //  DEVOPS PATH TIER 2 
   {
     id: 'terraform-iac',
     label: 'Terraform (IaC)',
@@ -321,7 +321,7 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'devops',
     requires: ['kubernetes'],
-    icon: '🏗️',
+    icon: 'Cloud',
     position: { x: 1060, y: 940 },
     tier: 2,
   },
@@ -332,7 +332,7 @@ export const SKILLS: Skill[] = [
     xpReward: 300,
     category: 'devops',
     requires: ['kubernetes'],
-    icon: '☸️',
+    icon: 'Code',
     position: { x: 1300, y: 940 },
     tier: 2,
   },
@@ -343,7 +343,7 @@ export const SKILLS: Skill[] = [
     xpReward: 320,
     category: 'devops',
     requires: ['kubernetes'],
-    icon: '🕸️',
+    icon: 'Server',
     position: { x: 1060, y: 1120 },
     tier: 2,
   },
@@ -354,12 +354,12 @@ export const SKILLS: Skill[] = [
     xpReward: 350,
     category: 'devops',
     requires: ['kubernetes'],
-    icon: '💥',
+    icon: 'Zap',
     position: { x: 1300, y: 1120 },
     tier: 2,
   },
 
-  // ─── AI ENGINEER PATH TIER 3 (FINAL TIER) ─────────────────────────────────
+  //  AI ENGINEER PATH TIER 3 (FINAL TIER) 
   {
     id: 'multimodal-architectures',
     label: 'Multimodal Systems',
@@ -367,7 +367,7 @@ export const SKILLS: Skill[] = [
     xpReward: 400,
     category: 'ai',
     requires: ['rlhf-alignment', 'diffusion-models'],
-    icon: '🔮',
+    icon: 'Layers',
     position: { x: 200, y: 1300 },
     tier: 3,
   },
@@ -378,12 +378,12 @@ export const SKILLS: Skill[] = [
     xpReward: 450,
     category: 'ai',
     requires: ['agentic-workflows', 'edge-ai'],
-    icon: '🌌',
+    icon: 'Box',
     position: { x: 320, y: 1480 },
     tier: 3,
   },
 
-  // ─── FULL STACK PATH TIER 3 (FINAL TIER) ──────────────────────────────────
+  //  FULL STACK PATH TIER 3 (FINAL TIER) 
   {
     id: 'web3-dapps',
     label: 'Web3 & DApps',
@@ -391,7 +391,7 @@ export const SKILLS: Skill[] = [
     xpReward: 400,
     category: 'fullstack',
     requires: ['websockets-realtime', 'pwa-offline'],
-    icon: '🪙',
+    icon: 'GitBranch',
     position: { x: 610, y: 1300 },
     tier: 3,
   },
@@ -402,12 +402,12 @@ export const SKILLS: Skill[] = [
     xpReward: 450,
     category: 'fullstack',
     requires: ['micro-frontends', 'graphql-federation'],
-    icon: '☄️',
+    icon: 'Monitor',
     position: { x: 850, y: 1300 },
     tier: 3,
   },
 
-  // ─── DEVOPS PATH TIER 3 (FINAL TIER) ──────────────────────────────────────
+  //  DEVOPS PATH TIER 3 (FINAL TIER) 
   {
     id: 'security-devsecops',
     label: 'Zero-Trust DevSecOps',
@@ -415,7 +415,7 @@ export const SKILLS: Skill[] = [
     xpReward: 400,
     category: 'devops',
     requires: ['terraform-iac', 'gitops'],
-    icon: '🛡️',
+    icon: 'Terminal',
     position: { x: 1060, y: 1300 },
     tier: 3,
   },
@@ -426,13 +426,13 @@ export const SKILLS: Skill[] = [
     xpReward: 450,
     category: 'devops',
     requires: ['service-mesh', 'chaos-engineering'],
-    icon: '🪐',
+    icon: 'Database',
     position: { x: 1300, y: 1300 },
     tier: 3,
   },
 ]
 
-// ── Helpers ─────────────────────────────────────────────────────────────────
+//  Helpers 
 
 /** Given a set of unlocked skill IDs, compute each skill's current status */
 export function computeStatuses(

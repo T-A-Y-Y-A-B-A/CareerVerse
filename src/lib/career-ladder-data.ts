@@ -14,7 +14,7 @@ export const CAREER_STAGES: CareerStage[] = [
   {
     id: 'junior',
     role: 'Junior Engineer',
-    icon: '🌱',
+    icon: 'Leaf',
     description: 'Build your foundation. Learn core programming, version control, and debugging to ship your first features.',
     salaryRange: '$70k – $100k',
     requiredSkills: ['Core Programming', 'Git / Version Control', 'Basic Debugging', 'Code Reading'],
@@ -25,7 +25,7 @@ export const CAREER_STAGES: CareerStage[] = [
   {
     id: 'engineer',
     role: 'Engineer',
-    icon: '⚙️',
+    icon: 'Cog',
     description: 'Own features end-to-end. Design systems, write production code, and participate in code reviews.',
     salaryRange: '$100k – $150k',
     requiredSkills: ['System Design Basics', 'CI/CD Pipelines', 'Code Reviewing', 'Testing Strategies'],
@@ -36,7 +36,7 @@ export const CAREER_STAGES: CareerStage[] = [
   {
     id: 'senior',
     role: 'Senior Engineer',
-    icon: '🔷',
+    icon: 'Diamond',
     description: 'Lead complex projects. Architect scalable solutions, mentor juniors, and optimize performance at scale.',
     salaryRange: '$140k – $200k+',
     requiredSkills: ['Advanced Architecture', 'Mentorship', 'Performance Optimization', 'Cross-team Collaboration'],
@@ -47,7 +47,7 @@ export const CAREER_STAGES: CareerStage[] = [
   {
     id: 'staff',
     role: 'Staff Engineer',
-    icon: '🏛️',
+    icon: 'Landmark',
     description: 'Set technical direction across teams. Drive platform strategy and influence engineering culture.',
     salaryRange: '$180k – $250k+',
     requiredSkills: ['Cross-team Leadership', 'Strategic Technical Vision', 'Scaling Systems', 'Tech Debt Strategy'],
@@ -58,7 +58,7 @@ export const CAREER_STAGES: CareerStage[] = [
   {
     id: 'cto',
     role: 'CTO',
-    icon: '👑',
+    icon: 'Crown',
     description: 'Lead the entire engineering organization. Shape business strategy through technology and build world-class teams.',
     salaryRange: '$250k – $400k+',
     requiredSkills: ['Executive Leadership', 'Business Strategy', 'Org Building', 'Board-level Communication'],

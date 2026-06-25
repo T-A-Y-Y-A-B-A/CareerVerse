@@ -1,4 +1,5 @@
 'use client'
+import { Check, PartyPopper } from 'lucide-react';
 
 import { useState, useEffect, useCallback } from 'react'
 import type { RoadmapMonth } from '@/lib/schema'
@@ -148,7 +149,7 @@ export function RoadmapTimeline({ roadmap, onNewRoadmap }: Props) {
                         </span>
                         {isDone && (
                           <span className="text-xs px-2 py-0.5 rounded-full bg-primary/20 text-primary font-medium">
-                            Complete ✓
+                            Complete <Check className="w-4 h-4 inline ml-1" />
                           </span>
                         )}
                       </div>
@@ -214,7 +215,7 @@ export function RoadmapTimeline({ roadmap, onNewRoadmap }: Props) {
       {/* Completion celebration */}
       {completedCount === totalMonths && totalMonths > 0 && (
         <div className="rounded-xl border border-primary/30 bg-primary/5 p-6 text-center space-y-2">
-          <p className="text-2xl">🎉</p>
+          <PartyPopper className="w-8 h-8 text-foreground" />
           <p className="font-bold">Roadmap Complete!</p>
           <p className="text-sm text-muted-foreground">
             You've finished every milestone. Time to set a new goal.

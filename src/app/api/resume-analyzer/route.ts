@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { db } from '@/lib/db'
-import { careerProfiles, users } from '@/lib/schema'
+import { careerProfiles, users, resumeAnalyses } from '@/lib/schema'
 import { eq } from 'drizzle-orm'
 import Groq from 'groq-sdk'
 
@@ -127,6 +127,13 @@ export async function POST(req: NextRequest) {
       fitVerdict: String(parsed.fitVerdict ?? parsed.fit_verdict ?? 'Unknown'),
       verdictExplanation: String(parsed.verdictExplanation ?? parsed.verdict_explanation ?? ''),
     }
+
+    // Save the analysis to the database
+    await db.insert(resumeAnalyses).values({
+      userId: user.id,
+      targetRole: jobDescription.substring(0, 50), // Store a snippet of the JD or extract role if possible
+      atsScore: analysis.atsScore,
+    })
 
     return NextResponse.json({ analysis })
   } catch (err: any) {

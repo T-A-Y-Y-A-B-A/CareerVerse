@@ -1,4 +1,5 @@
 'use client'
+import { Crown, Star, X } from 'lucide-react';
 
 import { useEffect, useState, useCallback } from 'react'
 import { useSounds } from '@/hooks/useSounds'
@@ -98,7 +99,7 @@ export default function SkillTreePage() {
   const [error,       setError]       = useState('')
   const [xpToast,     setXpToast]     = useState<number | null>(null)
   const [totalXP,     setTotalXP]     = useState(0)
-  const [achievement, setAchievement] = useState<{ type: 'skill' | 'ascension'; label: string; icon: string; xp: number; subLabel?: string } | null>(null)
+  const [achievement, setAchievement] = useState<{ type: 'skill' | 'ascension'; label: string; icon: React.ReactNode; xp: number; subLabel?: string } | null>(null)
   const { play } = useSounds()
 
   // Fetch initial state
@@ -190,7 +191,7 @@ export default function SkillTreePage() {
       setAchievement({
         type: 'ascension',
         label: `${pathName} Ascended`,
-        icon: targetPrestige === 2 ? '👑' : '🌟',
+        icon: targetPrestige === 2 ? <Crown className="w-4 h-4 inline" /> as React.ReactNode : <Star className="w-4 h-4 inline" /> as React.ReactNode,
         xp: json.xpGained,
         subLabel: `Promoted to ${tierName}!`
       })
@@ -304,8 +305,8 @@ export default function SkillTreePage() {
   )
 
   const getPrestigeLabel = (prestigeVal: number) => {
-    if (prestigeVal === 2) return <span className="text-purple-400 font-bold ml-1">★ Tier 3 (Legendary)</span>
-    if (prestigeVal === 1) return <span className="text-amber-400 font-bold ml-1">★ Tier 2 (Expert)</span>
+    if (prestigeVal === 2) return <span className="text-purple-400 font-bold ml-1">Tier 3 (Legendary)</span>
+    if (prestigeVal === 1) return <span className="text-amber-400 font-bold ml-1">Tier 2 (Expert)</span>
     return null
   }
 
@@ -352,11 +353,11 @@ export default function SkillTreePage() {
         
         let bannerColor = ''
         let buttonStyle = ''
-        let icon = '🌟'
+        let icon: React.ReactNode = <Star className="w-4 h-4 inline" />
         let description = ''
 
         if (targetTier === 3) {
-          icon = '👑'
+          icon = <Crown className="w-4 h-4 inline" />
           bannerColor = 'from-fuchsia-950/40 via-purple-900/20 to-transparent border-fuchsia-500 shadow-[0_0_25px_rgba(168,85,247,0.2)]'
           buttonStyle = 'bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 hover:from-fuchsia-600 hover:to-indigo-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)]'
           description = 'Mastered all Tier 2 skills. Ascend now to unlock the Legendary Final Tier (+1000 XP).'

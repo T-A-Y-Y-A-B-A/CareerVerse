@@ -3,6 +3,22 @@
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { useState } from 'react'
 import type { Skill, SkillStatus } from '@/lib/skills-data'
+import { Lock, Crown, Star, Check, Terminal, Database, Cpu, BrainCircuit, Cloud, Code, Server, Zap, Layers, Box, GitBranch, Monitor } from 'lucide-react'
+
+const ICON_MAP: Record<string, React.ReactNode> = {
+  Terminal: <Terminal className="w-6 h-6" />,
+  Database: <Database className="w-6 h-6" />,
+  Cpu: <Cpu className="w-6 h-6" />,
+  BrainCircuit: <BrainCircuit className="w-6 h-6" />,
+  Cloud: <Cloud className="w-6 h-6" />,
+  Code: <Code className="w-6 h-6" />,
+  Server: <Server className="w-6 h-6" />,
+  Zap: <Zap className="w-6 h-6" />,
+  Layers: <Layers className="w-6 h-6" />,
+  Box: <Box className="w-6 h-6" />,
+  GitBranch: <GitBranch className="w-6 h-6" />,
+  Monitor: <Monitor className="w-6 h-6" />,
+}
 
 export interface SkillNodeData extends Record<string, unknown> {
   skill:    Skill
@@ -89,24 +105,24 @@ export function SkillTreeNode({ data }: NodeProps) {
       >
         {/* Lock overlay for locked nodes */}
         {status === 'locked' && (
-          <span className="absolute top-1.5 right-1.5 text-xs opacity-60">🔒</span>
+          <span className="absolute top-1.5 right-1.5 opacity-60"><Lock className="w-3 h-3" /></span>
         )}
 
         {/* Ascension Lock overlay */}
         {status === 'needs-ascension' && (
-          <span className="absolute top-1.5 right-1.5 text-xs opacity-80" title="Requires Path Ascension">
-            {isTier3 ? '👑🔒' : '⭐🔒'}
+          <span className="absolute top-1.5 right-1.5 opacity-80 flex items-center gap-0.5" title="Requires Path Ascension">
+            {isTier3 ? <><Crown className="w-3 h-3" /><Lock className="w-3 h-3" /></> : <><Star className="w-3 h-3" /><Lock className="w-3 h-3" /></>}
           </span>
         )}
 
         {/* Checkmark for unlocked nodes */}
         {status === 'unlocked' && (
-          <span className="absolute top-1.5 right-1.5 text-xs">✓</span>
+          <span className="absolute top-1.5 right-1.5"><Check className="w-3 h-3" /></span>
         )}
 
         {/* Icon */}
-        <span className="text-2xl mb-1 leading-none" aria-hidden="true">
-          {skill.icon}
+        <span className="mb-1 flex items-center justify-center" aria-hidden="true">
+          {ICON_MAP[skill.icon] || <Code className="w-6 h-6" />}
         </span>
 
         {/* Label */}
@@ -126,7 +142,7 @@ export function SkillTreeNode({ data }: NodeProps) {
               : 'text-muted-foreground'
           }`}
         >
-          {status === 'unlocked' ? `+${skill.xpReward} XP ✓` : `+${skill.xpReward} XP`}
+          {status === 'unlocked' ? `+${skill.xpReward} XP` : `+${skill.xpReward} XP`}
         </span>
 
         {/* Click hint for available nodes */}
