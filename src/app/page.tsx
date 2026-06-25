@@ -26,6 +26,7 @@ import {
   Gamepad2,
   Zap
 } from "lucide-react";
+import { WallOfLove } from "@/components/wall-of-love";
 
 export default function Home() {
   const { play } = useSounds();
@@ -472,6 +473,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Section 6.5: Wall of Love */}
+        <WallOfLove />
 
         {/* Section 7: Final CTA */}
         <section className="py-32 px-6 relative border-t border-border overflow-hidden">

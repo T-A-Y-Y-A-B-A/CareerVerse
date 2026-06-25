@@ -155,3 +155,14 @@ export const questCompletions = pgTable('quest_completions', {
 }, (t) => ({
   uniq: uniqueIndex('quest_completions_uniq').on(t.userId, t.questId),
 }))
+
+// ── User Feedback ───────────────────────────────────────────────────────────
+export const userFeedback = pgTable('user_feedback', {
+  id:        serial('id').primaryKey(),
+  userId:    integer('user_id')
+               .notNull()
+               .references(() => users.id, { onDelete: 'cascade' }),
+  rating:    integer('rating').notNull(),
+  comment:   text('comment'),
+  createdAt: timestamp('created_at').defaultNow(),
+})

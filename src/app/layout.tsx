@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { FeedbackButton } from "@/components/feedback-button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
                 <ThemeToggle />
               </div>
             </div>
+            <FeedbackButton />
           </ThemeProvider>
         </body>
       </html>
