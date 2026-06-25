@@ -114,6 +114,21 @@ export function SkillTree({ skills, statuses, onUnlock }: Props) {
     [skills, statuses]
   )
 
+  // Find the nodes to focus on initially (e.g., currently available nodes)
+  const targetNodes = useMemo(() => {
+    const availableNodes = initialNodes.filter(n => statuses[n.id] === 'available')
+    if (availableNodes.length > 0) return availableNodes
+
+    const unlockedNodes = initialNodes.filter(n => statuses[n.id] === 'unlocked')
+    if (unlockedNodes.length > 0) {
+      const maxY = Math.max(...unlockedNodes.map(n => n.position.y))
+      return unlockedNodes.filter(n => n.position.y === maxY)
+    }
+
+    const minY = Math.min(...initialNodes.map(n => n.position.y))
+    return initialNodes.filter(n => n.position.y === minY)
+  }, [initialNodes, statuses])
+
   const [nodes, , onNodesChange] = useNodesState(initialNodes)
   const [edges, , onEdgesChange] = useEdgesState(initialEdges)
 
@@ -126,9 +141,11 @@ export function SkillTree({ skills, statuses, onUnlock }: Props) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         fitView
-        fitViewOptions={{ padding: 0.2 }}
+        fitViewOptions={{ padding: 0.3, nodes: targetNodes, maxZoom: 1.0 }}
         minZoom={0.3}
         maxZoom={1.5}
+        panOnScroll={true}
+        zoomOnScroll={false}
         proOptions={{ hideAttribution: true }}
       >
         <Background

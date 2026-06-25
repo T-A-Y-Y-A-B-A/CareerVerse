@@ -33,9 +33,9 @@ const CATEGORY_COLORS: Record<string, string> = {
 }
 
 const CATEGORY_AVAILABLE: Record<string, string> = {
-  ai:        'border-purple-400 text-purple-400',
-  fullstack: 'border-blue-400   text-blue-400',
-  devops:    'border-emerald-400 text-emerald-400',
+  ai:        'border-purple-600 dark:border-purple-400 text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-transparent',
+  fullstack: 'border-blue-600   dark:border-blue-400   text-blue-700   dark:text-blue-400 bg-blue-50 dark:bg-transparent',
+  devops:    'border-emerald-600 dark:border-emerald-400 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-transparent',
 }
 
 export function SkillTreeNode({ data }: NodeProps) {
@@ -78,18 +78,19 @@ export function SkillTreeNode({ data }: NodeProps) {
     } else if (isTier2) {
       stateClass = 'bg-black/85 border-amber-500 text-amber-400 hover:scale-105 cursor-pointer shadow-[0_0_10px_rgba(245,158,11,0.2)] hover:shadow-[0_0_15px_rgba(245,158,11,0.5)]'
     } else {
-      stateClass = `bg-background ${CATEGORY_AVAILABLE[skill.category]} cursor-pointer hover:scale-105 skill-node-available`
+      // Changed bg-background to empty to allow CATEGORY_AVAILABLE to apply bg color
+      stateClass = `${CATEGORY_AVAILABLE[skill.category]} cursor-pointer hover:scale-105 skill-node-available`
     }
     animClass  = unlocking ? 'skill-node-unlocking' : ''
   } else if (status === 'needs-ascension') {
     if (isTier3) {
-      stateClass = 'bg-muted/30 border-dashed border-purple-500/30 text-purple-500/40 opacity-50 cursor-not-allowed'
+      stateClass = 'bg-white/80 dark:bg-muted/30 border-dashed border-purple-500/50 dark:border-purple-500/30 text-purple-600 dark:text-purple-500/40 opacity-90 dark:opacity-50 cursor-not-allowed backdrop-blur-sm'
     } else {
-      stateClass = 'bg-muted/40 border-dashed border-amber-500/40 text-amber-500/50 opacity-60 cursor-not-allowed'
+      stateClass = 'bg-white/80 dark:bg-muted/40 border-dashed border-amber-600/50 dark:border-amber-500/40 text-amber-600/80 dark:text-amber-500/50 opacity-90 dark:opacity-60 cursor-not-allowed backdrop-blur-sm'
     }
   } else {
     // locked
-    stateClass = 'bg-muted border-border text-muted-foreground opacity-40 cursor-not-allowed'
+    stateClass = 'bg-slate-100/90 dark:bg-muted border-slate-300 dark:border-border text-slate-500 dark:text-muted-foreground opacity-90 dark:opacity-40 cursor-not-allowed backdrop-blur-sm'
   }
 
   return (
@@ -139,7 +140,7 @@ export function SkillTreeNode({ data }: NodeProps) {
                 : isTier2
                 ? 'text-black/80'
                 : 'text-white/70'
-              : 'text-muted-foreground'
+              : 'text-muted-foreground opacity-90 dark:opacity-60'
           }`}
         >
           {status === 'unlocked' ? `+${skill.xpReward} XP` : `+${skill.xpReward} XP`}
@@ -147,15 +148,15 @@ export function SkillTreeNode({ data }: NodeProps) {
 
         {/* Click hint for available nodes */}
         {status === 'available' && !unlocking && (
-          <span className="text-[9px] mt-0.5 opacity-70">
+          <span className="text-[9px] mt-0.5 opacity-100 dark:opacity-70 font-medium">
             {isTier3 ? 'tap to ascend' : isTier2 ? 'tap to master' : 'tap to unlock'}
           </span>
         )}
 
         {/* Toggle unmark hint for unlocked nodes */}
         {status === 'unlocked' && !unlocking && (
-          <span className={`text-[9px] mt-0.5 opacity-60 ${
-            isTier3 ? 'text-purple-300/80' : isTier2 ? 'text-black/60' : 'text-white/60'
+          <span className={`text-[9px] mt-0.5 opacity-80 dark:opacity-60 font-medium ${
+            isTier3 ? 'text-purple-300' : isTier2 ? 'text-black/80' : 'text-white/80'
           }`}>
             tap to lock
           </span>
@@ -163,7 +164,7 @@ export function SkillTreeNode({ data }: NodeProps) {
 
         {/* Needs Ascension hint */}
         {status === 'needs-ascension' && (
-          <span className={`text-[8px] mt-0.5 font-bold ${isTier3 ? 'text-purple-400' : 'text-amber-500/80'}`}>
+          <span className={`text-[8px] mt-0.5 font-bold opacity-100 dark:opacity-80 ${isTier3 ? 'text-purple-600 dark:text-purple-400' : 'text-amber-700 dark:text-amber-500'}`}>
             {isTier3 ? 'mastery required' : 'ascension required'}
           </span>
         )}
