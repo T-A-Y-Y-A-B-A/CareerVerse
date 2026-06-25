@@ -43,6 +43,7 @@ const items = [
 ];
 
 import logoImg from '../../public/abc.png';
+import logoLightImg from '../../public/abc_light.png';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -53,13 +54,20 @@ export function AppSidebar() {
       <SidebarHeader className="flex h-16 items-center justify-center border-b px-4">
         <div className="flex w-full items-center gap-4">
           <Image
+            src={logoLightImg}
+            alt="CareerVerse Logo"
+            width={52}
+            height={52}
+            className="rounded-md object-contain dark:hidden"
+          />
+          <Image
             src={logoImg}
             alt="CareerVerse Logo"
             width={52}
             height={52}
-            className="rounded-md object-contain"
+            className="rounded-md object-contain hidden dark:block"
           />
-          <span className="group-data-[collapsible=icon]:hidden font-bold text-[18px] text-white">
+          <span className="group-data-[collapsible=icon]:hidden font-bold text-[18px] text-foreground">
             CareerVerse
           </span>
         </div>
@@ -91,7 +99,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="border-t p-4 flex flex-row items-center gap-3">
         <UserButton />
-        <div className="flex flex-col group-data-[collapsible=icon]:hidden overflow-hidden">
+        <div className="flex flex-col group-data-[collapsible=icon]:hidden overflow-hidden flex-1">
           <span className="text-sm font-medium leading-none">Your Profile</span>
           <span className="text-xs text-muted-foreground truncate">Manage account</span>
         </div>

@@ -37,10 +37,14 @@ export default async function DashboardLayout({
         </header>
         <main 
           className="flex-1 overflow-auto bg-cover bg-center bg-fixed relative animate-in fade-in duration-1000"
-          style={{ backgroundImage: "url('/homepage.png')" }}
         >
-          {/* Reduced blur, added dark overlay to keep content as primary focus */}
-          <div className="absolute inset-0 bg-[#0a0a14]/85 z-0 pointer-events-none" />
+          {/* Background images for light/dark modes */}
+          <div className="absolute inset-0 z-0 bg-cover bg-center bg-fixed hidden dark:block" style={{ backgroundImage: "url('/homepage.png?v=2')" }} />
+          <div className="absolute inset-0 z-0 bg-cover bg-center bg-fixed dark:hidden" style={{ backgroundImage: "url('/homepage_light.png?v=2')" }} />
+          
+          {/* Overlays for readability */}
+          <div className="absolute inset-0 bg-[#0a0a14]/85 z-0 pointer-events-none hidden dark:block" />
+          <div className="absolute inset-0 bg-white/85 z-0 pointer-events-none dark:hidden" />
           <div className="relative z-10 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
             {children}
           </div>

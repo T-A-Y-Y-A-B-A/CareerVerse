@@ -80,11 +80,19 @@ export default function CareerTwinPage() {
           src="/careertwin.png"
           alt="Career Twin Background"
           fill
-          className="object-cover scale-105"
+          className="object-cover scale-105 hidden dark:block"
+          priority
+        />
+        <Image
+          src="/careertwin_light.png"
+          alt="Career Twin Background"
+          fill
+          className="object-cover scale-105 dark:hidden"
           priority
         />
         {/* Soft dark overlay for readability */}
-        <div className="absolute inset-0 bg-black/60 z-10" />
+        <div className="absolute inset-0 bg-background/60 z-10 hidden dark:block" />
+        <div className="absolute inset-0 bg-white/60 z-10 dark:hidden" />
         
         {/* Animated Particles / Rings Effect using CSS */}
         <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
@@ -96,12 +104,12 @@ export default function CareerTwinPage() {
       <div className="relative z-30 w-full max-w-4xl mx-auto space-y-10">
         
         {profile ? (
-          <div className="space-y-6 animate-in fade-in duration-500 bg-black/40 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl">
+          <div className="space-y-6 animate-in fade-in duration-500 bg-background backdrop-blur-md p-6 md:p-8 rounded-3xl border border-border shadow-2xl">
             <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight drop-shadow-lg">
                 Your Career Twin
               </h1>
-              <p className="text-gray-300 mt-2 font-medium drop-shadow-sm text-lg">
+              <p className="text-muted-foreground mt-2 font-medium drop-shadow-sm text-lg">
                 Interactive professional profile and AI recommendations.
               </p>
             </div>
@@ -114,13 +122,13 @@ export default function CareerTwinPage() {
           <div className="w-full flex flex-col items-center animate-in fade-in zoom-in-95 duration-700">
             {/* Heading */}
             <div className="text-center mb-10 max-w-2xl">
-              <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-2xl">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-foreground tracking-tight drop-shadow-2xl">
                 Career Twin
               </h1>
-              <p className="text-purple-300 text-lg md:text-xl mt-4 font-semibold drop-shadow-md">
+              <p className="text-primary text-lg md:text-xl mt-4 font-semibold drop-shadow-md">
                 AI Career Twin
               </p>
-              <p className="text-gray-200 mt-3 text-base md:text-lg font-medium drop-shadow-md leading-relaxed">
+              <p className="text-muted-foreground mt-3 text-base md:text-lg font-medium drop-shadow-md leading-relaxed">
                 Upload your CV to generate an interactive profile, calculate your industry readiness, and unlock your personalized roadmap.
               </p>
             </div>
@@ -138,9 +146,9 @@ export default function CareerTwinPage() {
                 { title: "Strength Detection", desc: "Identify your strongest selling points." },
                 { title: "Career Path", desc: "Predict the best roles for your background." }
               ].map((benefit, i) => (
-                <div key={i} className="bg-[#0a0a14]/60 backdrop-blur-md border border-white/10 rounded-xl p-5 hover:bg-white/5 transition-colors group">
-                  <h3 className="text-white font-bold text-base mb-1 group-hover:text-purple-400 transition-colors">{benefit.title}</h3>
-                  <p className="text-gray-400 text-sm font-medium">{benefit.desc}</p>
+                <div key={i} className="bg-card/60 backdrop-blur-md border border-border rounded-xl p-5 hover:bg-foreground/5 transition-colors group">
+                  <h3 className="text-foreground font-bold text-base mb-1 group-hover:text-purple-400 transition-colors">{benefit.title}</h3>
+                  <p className="text-muted-foreground text-sm font-medium">{benefit.desc}</p>
                 </div>
               ))}
             </div>

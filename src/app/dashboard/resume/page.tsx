@@ -259,10 +259,10 @@ export default function ResumeAnalyzerPage() {
             </svg>
             AI-Powered Analysis
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground dark:text-white tracking-tight">
             Resume <span className="bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">Analyzer</span>
           </h1>
-          <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground dark:text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             Paste a job description and our AI will analyze how well your resume matches — with ATS scoring, keyword gaps, and tailored improvement suggestions.
           </p>
         </div>
